@@ -24,22 +24,22 @@ export function createCalendarWorker(orca, { index = new HistoryIndex(), now = D
   }
 
   orca.panels.handle('calendar.snapshot', (input = {}) => {
-    if (!input || typeof input !== 'object' || Array.isArray(input)) throw invalid('Expected snapshot options.');
+    if (!input || typeof input !== 'object' || Array.isArray(input)) throw invalid('Se esperaban opciones de instantánea.');
     start();
     for (const [id, item] of snapshots) if (now() - item.at > LEASE_MS) snapshots.delete(id);
     let id = input.id, item;
     const offset = input.offset ?? 0;
-    if (!Number.isSafeInteger(offset) || offset < 0) throw invalid('Invalid snapshot offset.');
+    if (!Number.isSafeInteger(offset) || offset < 0) throw invalid('Desplazamiento de instantánea no válido.');
     if (id !== undefined) {
-      if (typeof id !== 'string' || !(item = snapshots.get(id))) throw invalid('Snapshot expired; request it again.', 'snapshot_expired');
+      if (typeof id !== 'string' || !(item = snapshots.get(id))) throw invalid('La instantánea ha caducado; vuelve a pedirla.', 'snapshot_expired');
     } else {
-      if (offset !== 0 || (input.allLocal !== undefined && typeof input.allLocal !== 'boolean')) throw invalid('Invalid snapshot options.');
+      if (offset !== 0 || (input.allLocal !== undefined && typeof input.allLocal !== 'boolean')) throw invalid('Opciones de instantánea no válidas.');
       id = randomUUID();
       item = { at: now(), data: JSON.stringify(index.snapshot({ allLocal: input.allLocal === true })) };
       while (snapshots.size >= 8) snapshots.delete(snapshots.keys().next().value);
       snapshots.set(id, item);
     }
-    if (offset > item.data.length) throw invalid('Snapshot offset is out of range.');
+    if (offset > item.data.length) throw invalid('El desplazamiento de la instantánea está fuera de rango.');
     const chunk = item.data.slice(offset, offset + SNAPSHOT_CHUNK);
     const next = offset + chunk.length;
     return { id, offset, chunk, total: item.data.length, next: next < item.data.length ? next : null };

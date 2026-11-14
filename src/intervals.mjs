@@ -107,7 +107,7 @@ export function csvCell(value) {
 }
 
 export function timesheetCSV(sessions, days) {
-  const rows = [['Project', 'Thread', 'Agent', 'Session ID', ...days.map(d => d.label), 'Total hours']];
+  const rows = [['Proyecto', 'Hilo', 'Agente', 'ID de sesión', ...days.map(d => d.label), 'Horas totales']];
   for (const s of [...sessions].sort((a, b) => a.project.localeCompare(b.project) || a.title.localeCompare(b.title))) {
     const values = days.map(d => duration(clipped(s.turns, d.start, d.end)) / 3_600_000);
     if (values.some(v => v > 0)) rows.push([s.project, s.title, s.agent, s.id,

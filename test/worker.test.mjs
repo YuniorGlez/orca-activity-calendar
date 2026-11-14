@@ -72,7 +72,7 @@ test('bridge rejects invalid cursors, and client retries after a worker restart'
       return snapshot(input);
     } } } });
     assert.equal((await client.snapshot()).sessions[0].key, 'a'); assert.equal(calls, 2);
-    await assert.rejects(createCalendarClient({ frame: {} }).snapshot(), /requires Orca 1.4.246/);
+    await assert.rejects(createCalendarClient({ frame: {} }).snapshot(), /requiere Orca 1\.4\.246/);
   } finally { await h.worker.close(); }
 });
 

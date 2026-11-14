@@ -3,9 +3,9 @@
   "execution": "trusted-worker",
   "id": "activity-calendar",
   "publisher": "bhojanibilal24",
-  "name": "Activity Calendar",
+  "name": "Calendario de actividad",
   "version": "0.1.4",
-  "description": "A sidebar activity calendar for Codex and Claude: work blocks, parallel agents, Orca thread names, work recaps, and CSV timesheets. Reads local history; no external service.",
+  "description": "Un calendario de actividad en la barra lateral para Codex y Claude: bloques de trabajo, agentes en paralelo, nombres de hilo de Orca, resúmenes de trabajo y hojas de horas en CSV. Lee el historial local; sin servicios externos.",
   "license": "MIT",
   "repository": "https://github.com/bhojanibilal24/orca-activity-calendar",
   "engines": { "orca": ">=1.4.246" },
@@ -13,10 +13,10 @@
   "main": "src/worker.mjs",
   "contributes": {
     "panels": [
-      { "id": "calendar", "title": "Activity Calendar", "icon": "calendar", "entry": "web/panel.html", "ui": "html" }
+      { "id": "calendar", "title": "Calendario de actividad", "icon": "calendar", "entry": "web/panel.html", "ui": "html" }
     ],
     "commands": [
-      { "id": "calendar.refresh", "title": "Activity Calendar: Refresh History", "when": "global" }
+      { "id": "calendar.refresh", "title": "Calendario de actividad: actualizar historial", "when": "global" }
     ],
     "events": [{ "on": "agent.status.changed" }]
   },

@@ -1,7 +1,7 @@
 export function createCalendarClient({ frame = globalThis.orca } = {}) {
   const key = 'orca-calendar-worktree-colors';
   const bridge = () => {
-    if (!frame?.plugin?.request) throw new Error('The sidebar calendar requires Orca 1.4.246 or later.');
+    if (!frame?.plugin?.request) throw new Error('El calendario de la barra lateral requiere Orca 1.4.246 o posterior.');
     return frame.plugin;
   };
   return {
@@ -13,13 +13,13 @@ export function createCalendarClient({ frame = globalThis.orca } = {}) {
           const id = page.id, total = page.total;
           let data = '', offset = 0;
           while (true) {
-            if (page.id !== id || page.offset !== offset || page.total !== total || typeof page.chunk !== 'string' || !page.chunk.length) throw new Error('Incomplete calendar history. Refresh to try again.');
+            if (page.id !== id || page.offset !== offset || page.total !== total || typeof page.chunk !== 'string' || !page.chunk.length) throw new Error('Historial del calendario incompleto. Actualiza para volver a intentarlo.');
             data += page.chunk; offset += page.chunk.length;
             if (page.next === null) break;
-            if (page.next !== offset || offset >= total) throw new Error('Invalid calendar history page.');
+            if (page.next !== offset || offset >= total) throw new Error('Página del historial del calendario no válida.');
             page = await bridge().request('calendar.snapshot', { id, offset });
           }
-          if (data.length !== total) throw new Error('Incomplete calendar history. Refresh to try again.');
+          if (data.length !== total) throw new Error('Historial del calendario incompleto. Actualiza para volver a intentarlo.');
           return JSON.parse(data);
         } catch (error) {
           if (error.code !== 'snapshot_expired' || attempt) throw error;

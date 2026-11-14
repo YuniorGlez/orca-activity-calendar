@@ -21,7 +21,7 @@ export function projectFromPath(cwd) {
   const parts = String(cwd || '').replaceAll('\\', '/').split('/').filter(Boolean);
   const workspace = parts.lastIndexOf('workspaces');
   if (workspace >= 0 && parts[workspace + 1]) return parts[workspace + 1];
-  return parts.at(-1) || 'Unassigned';
+  return parts.at(-1) || 'Sin asignar';
 }
 
 export function createParser(agent, file) {
@@ -82,7 +82,7 @@ export function createParser(agent, file) {
       }
     },
     finish() {
-      state.title ||= firstPrompt || `${agent} session`;
+      state.title ||= firstPrompt || `Sesión de ${agent}`;
       state.turns = unionIntervals(state.turns);
       return state;
     }

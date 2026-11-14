@@ -78,7 +78,7 @@ export class HistoryIndex {
         tasks.push(...files.map(file => ({ file, source })));
       } catch (error) {
         this.status.sources.push({ ...source, available: false, files: 0 });
-        if (error.code !== 'ENOENT') this.status.errors.push(`Cannot read ${source.agent} history: ${error.code || error.message}`);
+        if (error.code !== 'ENOENT') this.status.errors.push(`No se puede leer el historial de ${source.agent}: ${error.code || error.message}`);
       }
     }
     this.status.totalFiles = tasks.length; this.status.scannedFiles = 0;
@@ -101,7 +101,7 @@ export class HistoryIndex {
           }
           this.entries.set(file, entry);
         } catch (error) {
-          this.status.errors.push(`Skipped one ${source.agent} transcript: ${error.code || error.message}`);
+          this.status.errors.push(`Se omitió una transcripción de ${source.agent}: ${error.code || error.message}`);
         }
         this.status.scannedFiles++;
       }
